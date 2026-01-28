@@ -1,0 +1,233 @@
+<meta name="robots" content="noindex, nofollow">
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>資訊科及程式研究與學習</title>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Urbanist', 'Noto Sans TC', sans-serif;
+      background: linear-gradient(135deg, #fdfdfd, #e0f2fe);
+      color: #1e293b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    header h1 {
+      font-size: 48px;
+      color: #0ea5e9;
+      margin: 0;
+    }
+
+    .carousel-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 1400px;
+      margin: 20px 0;
+    }
+
+    .carousel {
+      position: relative;
+      width: 90%;
+      max-width: 1280px;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      background: #ffffff;
+    }
+
+    .cards {
+      display: flex;
+      transition: transform 0.5s ease;
+      height: 100%;
+    }
+
+    .card {
+      min-width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0;
+      color: #334155;
+      background: #e2e8f0;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .iframe-wrapper {
+      position: relative;
+      width: 100%;
+      height: calc(100% - 40px);
+      background: #f1f5f9;
+    }
+
+    .iframe-wrapper iframe,
+    .iframe-wrapper .fallback {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .fallback {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      color: #dc2626;
+      font-weight: 600;
+      background: #fef2f2;
+    }
+
+    .arrow {
+      font-size: 32px;
+      background: rgba(0,0,0,0.3);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+      margin: 0 15px;
+    }
+
+    .arrow:hover {
+      background: rgba(0,0,0,0.6);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>資訊科及程式研究與學習</h1>
+  </header>
+
+  <div class="carousel-wrapper">
+    <!-- 左箭頭 -->
+    <button class="arrow" onclick="prevCard()">&#10094;</button>
+
+    <!-- 卡片輪播 -->
+    <div class="carousel">
+      <div class="cards" id="cards">
+        <!-- 遊戲 -->
+        <div class="card">
+          <div class="card-title">遊戲</div>
+          <div class="iframe-wrapper" id="wrapper-game"></div>
+        </div>
+        <!-- 檢定與比賽 -->
+        <div class="card">
+          <div class="card-title">檢定與比賽</div>
+          <div class="iframe-wrapper" id="wrapper-test"></div>
+        </div>
+        <!-- GitHub 介紹 -->
+        <div class="card">
+          <div class="card-title">GitHub 介紹</div>
+          <div class="iframe-wrapper" id="wrapper-github"></div>
+        </div>
+        <!-- Zero Judge -->
+        <div class="card">
+          <div class="card-title">Zero Judge</div>
+          <div class="iframe-wrapper" id="wrapper-zerojudge"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右箭頭 -->
+    <button class="arrow" onclick="nextCard()">&#10095;</button>
+  </div>
+
+  <footer>
+    © 2026 資訊科及程式研究與學習
+  </footer>
+
+  <script>
+    let currentIndex = 0;
+    const cards = document.getElementById("cards");
+    const totalCards = cards.children.length;
+
+    function showCard(index) {
+      if (index < 0) index = totalCards - 1;
+      if (index >= totalCards) index = 0;
+      currentIndex = index;
+      cards.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    function prevCard() {
+      showCard(currentIndex - 1);
+    }
+
+    function nextCard() {
+      showCard(currentIndex + 1);
+    }
+
+    function showFallback(wrapper) {
+      const fallback = document.createElement("div");
+      fallback.className = "fallback";
+      fallback.textContent = "目前還在準備中，預計 2026/2/23 前完成";
+      wrapper.innerHTML = "";
+      wrapper.appendChild(fallback);
+    }
+
+    function loadIframeOrFallback(wrapper, url) {
+      fetch(url, { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            const iframe = document.createElement("iframe");
+            iframe.src = url;
+            wrapper.innerHTML = "";
+            wrapper.appendChild(iframe);
+          } else {
+            showFallback(wrapper);
+          }
+        })
+        .catch(() => {
+          showFallback(wrapper);
+        });
+    }
+
+    window.onload = () => {
+      showCard(0);
+      loadIframeOrFallback(document.getElementById("wrapper-game"), "game.html");
+      loadIframeOrFallback(document.getElementById("wrapper-test"), "test.html");
+      loadIframeOrFallback(document.getElementById("wrapper-github"), "github.html");
+      loadIframeOrFallback(document.getElementById("wrapper-zerojudge"), "zerojudge.html");
+    };
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青少年程式開發工具深度分析報告</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 基礎設置 - 確保背景填滿 */
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #020617;
+            font-family: 'Urbanist', 'Noto Sans TC', sans-serif;
+            color: #f1f5f9;
+            min-height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            gap: 40px;
+        }
+
+        /* 投影片容器 - 移除固定比例，改用彈性高度 */
+        .slide-container {
+            width: 100%;
+            max-width: 1000px;
+            min-height: 500px; /* 最小高度保證外觀 */
+            background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            overflow: visible; /* 允許內容撐開 */
+        }
+
+        /* 文字樣式優化 */
+        h1 { font-size: clamp(24px, 6vw, 56px); margin: 0; color: #22c55e; line-height: 1.2; text-align: center; }
+        .slide-title { 
+            font-size: clamp(20px, 4vw, 36px); 
+            font-weight: 700; 
+            color: #f8fafc; 
+            margin-bottom: 25px; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            line-height: 1.3;
+        }
+        .slide-title::before { content: ''; width: 6px; height: 1em; background: #22c55e; border-radius: 3px; flex-shrink: 0; }
+        
+        h3 { font-size: clamp(18px, 3vw, 26px); color: #4ade80; margin: 0 0 15px 0; }
+        p, li { font-size: clamp(15px, 2vw, 18px); line-height: 1.6; color: #94a3b8; }
+        .subtitle { font-size: clamp(16px, 2.5vw, 22px); color: #64748b; margin-top: 20px; text-align: center; }
+
+        /* 佈局切換 */
+        .content-layout {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 850px) {
+            .content-layout {
+                flex-direction: column;
+            }
+            .slide-container {
+                padding: 30px 20px;
+            }
+        }
+
+        .text-side { flex: 1; }
+        
+        /* 圖片處理 - 寬度自適應 */
+        .image-side { 
+            flex: 1;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #1e293b;
+        }
+        .image-side img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            max-height: 400px;
+        }
+
+        /* 列表樣式 */
+        .bullet-list { list-style: none; padding: 0; margin: 15px 0 0 0; }
+        .bullet-list li { margin-bottom: 15px; position: relative; padding-left: 30px; }
+        .bullet-list i { position: absolute; left: 0; top: 0.3em; color: #22c55e; }
+        .bullet-list li strong { color: #f1f5f9; }
+
+        /* 裝飾線 */
+        .divider { height: 2px; width: 60px; background: #22c55e; margin: 20px auto; }
+
+        /* 來源卡片 */
+        .source-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .source-card { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            padding: 12px; 
+            background: rgba(30, 41, 59, 0.5); 
+            border-radius: 10px;
+            font-size: 13px;
+        }
+        .source-card img { width: 50px; height: 35px; object-fit: cover; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: 封面 -->
+<div class="slide-container">
+    <div style="margin: auto;">
+        <h1>青少年程式開發工具<br>深度分析報告</h1>
+        <p class="subtitle">針對學習潛力、各項優點與限制之專業評估報告</p>
+        <div class="divider"></div>
+        <p style="text-align: center; font-weight: 700; color: #f8fafc;">大帥哥 製作</p>
+    </div>
+</div>
+
+<!-- Slide 2: CodeCombat -->
+<div class="slide-container">
+    <h2 class="slide-title">CodeCombat：語法基礎與邏輯啟蒙</h2>
+    <div class="content-layout">
+        <div class="text-side">
+            <h3>它的功能與目的：</h3>
+            <p>這是一個將程式碼轉化為遊戲冒險的「沉浸式教學平台」，專為初學者設計。</p>
+            <ul class="bullet-list">
+                <li><i class="fa-solid fa-code"></i> <strong>真實語言：</strong> 擺脫積木，學習 Python 或 JS。</li>
+                <li><i class="fa-solid fa-brain"></i> <strong>邏輯訓練：</strong> 訓練變數、循環與算法思維。</li>
+                <li><i class="fa-solid fa-check-circle"></i> <strong>即時反饋：</strong> 語法錯誤會立刻在關卡中顯示。</li>
+            </ul>
+        </div>
+        <div class="image-side">
+            <img src="https://blog.codecombat.com/content/images/2022/10/UI-Level-Layoutv4.png" alt="CodeCombat 介面">
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Roblox Studio -->
+<div class="slide-container">
+    <h2 class="slide-title">Roblox Studio：創意與社交協作</h2>
+    <div class="content-layout">
+        <div class="text-side">
+            <h3>它的核心特色：</h3>
+            <p>全球最大的 3D 遊戲開發社群，讓學生從中學習「產品化」的思維。</p>
+            <ul class="bullet-list">
+                <li><i class="fa-solid fa-cube"></i> <strong>3D 空間建模：</strong> 實作物理現象與幾何學。</li>
+                <li><i class="fa-solid fa-users"></i> <strong>多人連線架構：</strong> 學習伺服器與客戶端數據交換。</li>
+                <li><i class="fa-solid fa-rocket"></i> <strong>全球發布：</strong> 訓練社群營運與用戶反饋處理。</li>
+            </ul>
+        </div>
+        <div class="image-side">
+            <img src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/5X/2/b/e/e/2bee4a7edb85f342d6b5655872a171ba024fad05.jpeg" alt="Roblox Studio 開發畫面">
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Unity -->
+<div class="slide-container">
+    <h2 class="slide-title">Unity：邁向職業級的技術巔峰</h2>
+    <div class="content-layout">
+        <div class="text-side">
+            <h3>為什麼要學 Unity？</h3>
+            <p>全球主流開發引擎，是接軌大學專業與產業界的最佳門票。</p>
+            <ul class="bullet-list">
+                <li><i class="fa-solid fa-microchip"></i> <strong>C# 正統程式：</strong> 學習嚴謹的物件導向架構。</li>
+                <li><i class="fa-solid fa-vr-cardboard"></i> <strong>跨領域應用：</strong> 支援 VR/AR、工業模擬與動畫。</li>
+                <li><i class="fa-solid fa-briefcase"></i> <strong>職涯競爭力：</strong> 此能力在升學與就業市場極具優勢。</li>
+            </ul>
+        </div>
+        <div class="image-side">
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1000" alt="Unity 工作室環境">
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: Image Sources -->
+<div class="slide-container">
+    <h2 class="slide-title">資料與圖片來源</h2>
+    <div class="source-grid">
+        <div class="source-card">
+            <img src="https://blog.codecombat.com/content/images/2022/10/UI-Level-Layoutv4.png">
+            <span>CodeCombat Blog - Official UI Screenshot</span>
+        </div>
+        <div class="source-card">
+            <img src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/5X/2/b/e/e/2bee4a7edb85f342d6b5655872a171ba024fad05.jpeg">
+            <span>Roblox Developer Forum - Engine Preview</span>
+        </div>
+        <div class="source-card">
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1000">
+            <span>Unsplash - Tech & Development Environment</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
